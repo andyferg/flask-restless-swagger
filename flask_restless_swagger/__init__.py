@@ -114,6 +114,7 @@ class SwagAPIManager(object):
                         'description': 'searchjson',
                         'type': 'string'
                     }],
+                    'operationId': '{0}{1}'.format(method, name.capitalize()),
                     'responses': {
                         200: {
                             'description': 'List ' + name,
@@ -140,6 +141,7 @@ class SwagAPIManager(object):
                         'required': True,
                         'type': 'integer'
                     }],
+                    'operationId': '{0}{1}'.format(method, name.capitalize()),
                     'responses': {
                         200: {
                             'description': 'Success ' + name,
@@ -165,6 +167,7 @@ class SwagAPIManager(object):
                         'required': True,
                         'type': 'integer'
                     }],
+                    'operationId': '{0}{1}'.format(method, name.capitalize()),
                     'responses': {
                         200: {
                             'description': 'Success'
@@ -184,6 +187,7 @@ class SwagAPIManager(object):
                         'required': True,
                         'schema': {"$ref": "#/definitions/" + schema}
                     }],
+                    'operationId': '{0}{1}'.format(method, name.capitalize()),
                     'responses': {
                         200: {
                             'description': 'Success'
@@ -241,7 +245,7 @@ class SwagAPIManager(object):
         @swagger.route('/swagger.json')
         def swagger_json():
             # I can only get this from a request context
-            if not self.swagger['host']: 
+            if not self.swagger['host']:
                 self.swagger['host'] = urlparse.urlparse(request.url_root).netloc
             return jsonify(self.swagger)
 
