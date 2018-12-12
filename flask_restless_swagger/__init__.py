@@ -13,6 +13,7 @@ import yaml
 from flask import jsonify, request, Blueprint, redirect
 from flask_restless import APIManager
 from flask_restless.helpers import *
+from sqlalchemy_utils import get_columns
 
 sqlalchemy_swagger_mapping = {
     'INTEGER': {'format': 'int32', 'type': 'integer'},
@@ -33,6 +34,7 @@ sqlalchemy_swagger_mapping = {
     'BIGINT': {'format': 'int64', 'type': 'integer'},
     'ENUM': {'format': 'string', 'type': 'string'},
     'INTERVAL': {'format': 'date-time', 'type': 'string'},
+    'TIME': {'format': 'time', 'type': 'string'},
 }
 
 
