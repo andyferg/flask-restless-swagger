@@ -227,8 +227,8 @@ class SwagAPIManager(object):
                         }
                     }}
 
-            if column.__doc__:
-                column_defn['description'] = column.__doc__
+            # if column.__doc__:
+            #     column_defn['description'] = column.__doc__
             self.swagger['definitions'][name]['properties'][column_name] = column_defn
 
     def init_app(self, app, **kwargs):
