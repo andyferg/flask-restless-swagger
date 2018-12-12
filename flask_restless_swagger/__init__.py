@@ -241,7 +241,8 @@ class SwagAPIManager(object):
         @swagger.route('/swagger.json')
         def swagger_json():
             # I can only get this from a request context
-            self.swagger['host'] = urlparse.urlparse(request.url_root).netloc
+            if not self.swagger['host']: 
+                self.swagger['host'] = urlparse.urlparse(request.url_root).netloc
             return jsonify(self.swagger)
 
         app.register_blueprint(swagger)
