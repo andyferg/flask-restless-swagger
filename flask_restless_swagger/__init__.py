@@ -1,3 +1,5 @@
+from sqlalchemy_utils.types import uuid
+
 __author__ = 'Michael Messmore'
 __email__ = 'mike@messmore.org'
 __version__ = '0.2.0'
@@ -10,6 +12,7 @@ except:
 import json
 
 import yaml
+import uuid
 from flask import jsonify, request, Blueprint, redirect
 from flask_restless import APIManager
 from flask_restless.helpers import *
@@ -114,7 +117,7 @@ class SwagAPIManager(object):
                         'description': 'searchjson',
                         'type': 'string'
                     }],
-                    'operationId': '{0}{1}'.format(method, name.capitalize()),
+                    'operationId': '{0}{1}-{2}'.format(method, name.capitalize(), uuid.uuid4()),
                     'responses': {
                         200: {
                             'description': 'List ' + name,
@@ -141,7 +144,7 @@ class SwagAPIManager(object):
                         'required': True,
                         'type': 'integer'
                     }],
-                    'operationId': '{0}{1}'.format(method, name.capitalize()),
+                    'operationId': '{0}{1}-{2}'.format(method, name.capitalize(), uuid.uuid4()),
                     'responses': {
                         200: {
                             'description': 'Success ' + name,
@@ -167,7 +170,7 @@ class SwagAPIManager(object):
                         'required': True,
                         'type': 'integer'
                     }],
-                    'operationId': '{0}{1}'.format(method, name.capitalize()),
+                    'operationId': '{0}{1}-{2}'.format(method, name.capitalize(), uuid.uuid4()),
                     'responses': {
                         200: {
                             'description': 'Success'
@@ -187,7 +190,7 @@ class SwagAPIManager(object):
                         'required': True,
                         'schema': {"$ref": "#/definitions/" + schema}
                     }],
-                    'operationId': '{0}{1}'.format(method, name.capitalize()),
+                    'operationId': '{0}{1}-{2}'.format(method, name.capitalize(), uuid.uuid4()),
                     'responses': {
                         200: {
                             'description': 'Success'
@@ -249,6 +252,13 @@ class SwagAPIManager(object):
                 self.swagger['host'] = urlparse.urlparse(request.url_root).netloc
             return jsonify(self.swagger)
 
+        @swagger.route('/swagger.yaml')
+        def swagger_yaml():
+            # I can only get this from a request context
+            if not self.swagger['host']:
+                self.swagger['host'] = urlparse.urlparse(request.url_root).netloc
+            return self.to_yaml()
+
         app.register_blueprint(swagger)
 
     def create_api(self, model, **kwargs):
@@ -257,5 +267,4 @@ class SwagAPIManager(object):
         self.add_path(model, **kwargs)
 
     def swagger_blueprint(self):
-
         return swagger
