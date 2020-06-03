@@ -34,12 +34,7 @@ setup(
     ],
     package_dir={'flask_restless_swagger': 'flask_restless_swagger'},
     include_package_data=True,
-    install_requires=[
-        'Flask>=0.10.0',
-        'Flask-Restless>=0.17.0',
-        'pyyaml>=3.11',
-        'wheel>=0.22'
-    ],
+    install_requires=[],
     license='BSD',
     zip_safe=False,
     keywords='flask-restless-swagger',
